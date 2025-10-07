@@ -214,6 +214,7 @@ export interface NoTimeStamp {
 export interface Category {
   id: string;
   title?: string | null;
+  simple?: (string | null) | Simple;
   hideout?: {
     camera1?: {
       time1Image?: (string | null) | Post;
@@ -225,6 +226,17 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "simple".
+ */
+export interface Simple {
+  id: string;
+  text?: string | null;
+  number?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -232,6 +244,7 @@ export interface Post {
   title: string;
   category?: (string | null) | Category;
   categoryTitle?: string | null;
+  categorySimpleText?: string | null;
   categories?: (string | Category)[] | null;
   categoryPoly?: {
     relationTo: 'categories';
@@ -351,17 +364,6 @@ export interface CategoriesCustomId {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "simple".
- */
-export interface Simple {
-  id: string;
-  text?: string | null;
-  number?: number | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1605,6 +1607,7 @@ export interface NoTimeStampsSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  simple?: T;
   hideout?:
     | T
     | {
@@ -1646,6 +1649,7 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   category?: T;
   categoryTitle?: T;
+  categorySimpleText?: T;
   categories?: T;
   categoryPoly?: T;
   categoryPolyMany?: T;
